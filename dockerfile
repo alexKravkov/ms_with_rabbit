@@ -8,10 +8,9 @@ WORKDIR /app
 
 # Copy only pyproject.toml and optional lock file first
 COPY pyproject.toml ./
-COPY uv.lock ./
 
 # Install dependencies with uv (lock file if available)
-RUN if [ -f "uv.lock" ]; then uv venv && uv pip install -r uv.lock; else uv pip install -r pyproject.toml; fi
+RUN uv venv && uv pip install -r pyproject.toml
 
 # Copy the rest of the code
 COPY . .
