@@ -10,10 +10,12 @@ WORKDIR /app
 COPY pyproject.toml ./
 
 # Install dependencies with uv (lock file if available)
-RUN uv venv && uv pip install -r pyproject.toml
+RUN uv venv && \
+    . .venv/bin/activate && \
+    uv pip install -r pyproject.toml
 
 # Copy the rest of the code
 COPY . .
 
 # Activate the venv and run the app
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv","run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
